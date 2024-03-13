@@ -14,8 +14,6 @@ class BpjsController extends Controller
         return view('home');
     }
 
-
-   
     public function index()
     {
         $data = Bpjs::all();
@@ -44,47 +42,55 @@ class BpjsController extends Controller
         $bpjsEntries = Bpjs::all();
         $polies = Poly::all();
         $dokters = Dokter::all();
-    
+
         // Get the 'id' parameter from the URL
         $bpjsEntryId = $request->input('id');
-    
+
         // Fetch the corresponding Bpjs entry from the database
         $bpjsEntry = Bpjs::find($bpjsEntryId);
-    
+
         return view('select', compact('bpjsEntries', 'polies', 'dokters', 'bpjsEntry'));
     }
 
-
-
-
- 
     public function handleSelection(Request $request, $id)
     {
         // Validate the form data as needed
         $request->validate([
-            'no_bpjs' => 'required', // Add other validation rules as needed
-            'selected_poli' => 'required',
-            'selected_dokter' => 'required',
-            'norm' => 'required', // Add validation rule for 'norm' if needed
+            'selected_poly_id' => 'required|exists:polies,id',
+            'selected_dokter_id' => 'required|exists:dokters,id',
             // Add other validation rules as needed
         ]);
-    
-        // Retrieve data from the validated request
-        $noBpjs = $request->input('no_bpjs');
-        $selectedPoli = $request->input('selected_poli');
-        $selectedDokter = $request->input('selected_dokter');
-        $norm = $request->input('norm');
-    
-        // Save data to the database
-        Bpjs::create([
-            'no_bpjs' => $noBpjs,
-            'norm' => $norm,
-            'selected_poly_id' => $selectedPoli,
-            'selected_dokter_id' => $selectedDokter,
-            // Add other fields as needed
-        ]);
-    }    
-    
-    
+
+        // Find the BPJS entry by ID
+        $bpjsEntry = Bpjs::find($id);
+
+        if (!$bpjsEntry) {
+            return redirect()->back()->with('error', 'BPJS entry not found');
+        }
+
+        // Update the selected poly and dokter for the BPJS entry
+        $bpjsEntry->selected_poly_id = $request->input('selected_poly_id');
+        $bpjsEntry->selected_dokter_id = $request->input('selected_dokter_id');
+
+        // Save changes to the database
+        $bpjsEntry->save();
+
+        return redirect()->back()->with('success', 'Selection saved successfully');
+    }
+
+
+    public function print($id)
+{
+    // Find the BPJS entry by ID
+    $bpjsEntry = Bpjs::find($id);
+
+    if (!$bpjsEntry) {
+        return redirect()->back()->with('error', 'BPJS entry not found');
+    }
+
+    // You can pass $bpjsEntry to the print view if needed
+    return view('print', compact('bpjsEntry'));
+}
+
 
 }
