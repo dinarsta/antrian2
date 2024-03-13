@@ -104,15 +104,24 @@
                 @endif
             </div>
             <div class="modal-footer">
-            @if(isset($row))
-                    <!-- Use ID for the route URL -->
-                    <a href="{{ route('select', ['id' => $row->id]) }}" class="btn btn-primary">Simpan</a>
-
-                    <!-- Or use BPJS number for the route URL -->
-                    <!-- <a href="{{ route('select', ['bpjs' => $row->nomor_bpjs]) }}" class="btn btn-primary">Simpan</a> -->
-                @endif
+    @if(isset($data) && $data->count() > 0)
+        <!-- Displaying only one "Simpan" button outside the loop -->
+        <button type="button" class="btn btn-primary" onclick="redirectToSelect()">Simpan</button>
+    @endif
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 </div>
+
+
+
+<script>
+    function redirectToSelect() {
+        // Get the ID from the span with id "patientId"
+        var id = document.getElementById('patientId').innerText;
+        // Ganti URL dengan URL yang sesuai untuk halaman "select"
+        window.location.href = '{{ route("select") }}' + '?id=' + id;
+    }
+</script>
+
 
         </div>
     </div>

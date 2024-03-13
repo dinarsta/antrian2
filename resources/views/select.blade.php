@@ -10,15 +10,39 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form action="{{ route('select') }}" method="post" class="bg-white p-4 rounded shadow">
+
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                    <a href="{{ route('print', ['id' => $bpjsEntry->id]) }}" class="btn btn-primary">Print</a>
+
+
+                </div>
+            @endif
+
+                <form action="{{ route('handle.selection', ['id' => $bpjsEntry->id]) }}" method="post" class="bg-white p-4 rounded shadow">
                     @csrf
                     <h1 class="text-center mb-4">Pilih Poli dan Dokter</h1>
 
-                    <div class="mb-3">
-    <label for="no_bpjs" class="form-label">Nomor BPJS:</label>
-    <input type="text" class="form-control" id="no_bpjs" name="no_bpjs" autocomplete="off" value="{{ $bpjsEntry->no_bpjs }}" readonly>
-</div>
 
+                    <div class="mb-3">
+                        <label for="no_bpjs" class="form-label">Nomor BPJS:</label>
+                        <input type="text" class="form-control" id="no_bpjs" name="no_bpjs" autocomplete="off" value="{{ $bpjsEntry->no_bpjs }}" readonly>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="norm" class="form-label">NO RM:</label>
+                        <input type="text" class="form-control" id="norm" name="norm" autocomplete="off" value="{{ $bpjsEntry->norm }}" readonly>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama:</label>
+                        <input type="text" class="form-control" id="nama" name="nama" autocomplete="off" value="{{ $bpjsEntry->nama }}" readonly>
+                    </div>
+
+             
+
+                    <!-- Display other patient details as needed -->
 
                     <div class="mb-3">
                         <label for="selected_poli" class="form-label">Pilih Poliklinik:</label>
