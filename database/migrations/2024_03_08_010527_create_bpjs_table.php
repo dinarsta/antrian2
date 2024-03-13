@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('no_bpjs');
             $table->string('norm');
-            $table->string('nik_ktp');
+            $table->string('nik_ktp')->nullable();
             $table->string('nama');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->date('tgl_lahir');

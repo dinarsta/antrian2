@@ -14,6 +14,8 @@ class BpjsController extends Controller
         return view('home');
     }
 
+
+   
     public function index()
     {
         $data = Bpjs::all();
@@ -51,7 +53,7 @@ class BpjsController extends Controller
     
         return view('select', compact('bpjsEntries', 'polies', 'dokters', 'bpjsEntry'));
     }
-    
+
 
 
 
@@ -60,33 +62,28 @@ class BpjsController extends Controller
     {
         // Validate the form data as needed
         $request->validate([
-            'selected_poli' => 'required|exists:polies,id',
-            'selected_dokter' => 'required|exists:dokters,id',
+            'no_bpjs' => 'required', // Add other validation rules as needed
+            'selected_poli' => 'required',
+            'selected_dokter' => 'required',
+            'norm' => 'required', // Add validation rule for 'norm' if needed
+            // Add other validation rules as needed
         ]);
     
-        // Find the BPJS entry by ID
-        $bpjsEntry = Bpjs::find($id);
+        // Retrieve data from the validated request
+        $noBpjs = $request->input('no_bpjs');
+        $selectedPoli = $request->input('selected_poli');
+        $selectedDokter = $request->input('selected_dokter');
+        $norm = $request->input('norm');
     
-        // Update the selected poly and dokter for the BPJS entry
-        $bpjsEntry->selected_poly_id = $request->input('selected_poli');
-        $bpjsEntry->selected_dokter_id = $request->input('selected_dokter');
-    
-        // Save the changes
-        $bpjsEntry->save();
-    
-        return redirect()->back()->with('success', 'Pilihan berhasil disimpan');
-    }
-
-
-    
-    public function print($id)
-    {
-        // Fetch the data based on the provided $id
-        $bpjsEntry = Bpjs::find($id); // Replace with your actual model
-    
-        // Return the view with the data
-        return view('print', ['bpjsEntry' => $bpjsEntry]);
-    }
+        // Save data to the database
+        Bpjs::create([
+            'no_bpjs' => $noBpjs,
+            'norm' => $norm,
+            'selected_poly_id' => $selectedPoli,
+            'selected_dokter_id' => $selectedDokter,
+            // Add other fields as needed
+        ]);
+    }    
     
     
 

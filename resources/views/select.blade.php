@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -44,9 +44,21 @@
 
                     <!-- Display other patient details as needed -->
 
-                    <div class="mb-3">
-                        <label for="selected_poli" class="form-label">Pilih Poliklinik:</label>
-                        <select name="selected_poli" id="selected_poli" class="form-select">
+<div class="mb-3">
+    <label for="nama" class="form-label">NAMA:</label>
+    <input type="text" class="form-control" id="nama" name="nama" autocomplete="off" value="{{ optional($bpjsEntry)->nama }}" readonly>
+</div>
+
+<div class="mb-3">
+    <label for="nik_ktp" class="form-label">NIK:</label>
+    <input type="text" class="form-control" id="nik_ktp" name="nik_ktp" autocomplete="off" value="{{ optional($bpjsEntry)->nik_ktp }}" readonly>
+</div>
+
+
+
+                     <div class="mb-3">
+                        <label for="selected_poly_id" class="form-label">Pilih Poliklinik:</label>
+                        <select name="selected_poly_id" id="selected_poly_id" class="form-select">
                             @foreach ($polies as $poli)
                                 <option value="{{ $poli->id }}">{{ $poli->nama_poly }}</option>
                             @endforeach
@@ -54,15 +66,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="selected_dokter" class="form-label">Pilih Dokter:</label>
-                        <select name="selected_dokter" id="selected_dokter" class="form-select">
+                        <label for="selected_dokter_id" class="form-label">Pilih Dokter:</label>
+                        <select name="selected_dokter_id" id="selected_dokter_id" class="form-select">
                             @foreach ($dokters as $dokter)
                                 <option value="{{ $dokter->id }}">{{ $dokter->nama_dokter }}</option>
                             @endforeach
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Simpan Pilihan</button>
+                    <button type="submit"  name="submit" class="btn btn-primary">Simpan Pilihan</button>
                 </form>
             </div>
         </div>
