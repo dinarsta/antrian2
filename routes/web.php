@@ -25,7 +25,12 @@ Route::get('/tampildokter', [BpjsController::class, 'tampildokter'])->name('tamp
 
 // select
 Route::get('select', [BpjsController::class, 'showSelectForm'])->name('select');
-Route::post('select', [BpjsController::class, 'handleSelection']);
+Route::post('/select', [BpjsController::class, 'handleSelection'])->name('select.handle');
+
+
+
+Route::get('/print/{id}', [BpjsController::class, 'print'])->name('print');
+
 
 
 

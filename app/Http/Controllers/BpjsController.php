@@ -14,6 +14,8 @@ class BpjsController extends Controller
         return view('home');
     }
 
+
+   
     public function index()
     {
         $data = Bpjs::all();
@@ -42,45 +44,63 @@ class BpjsController extends Controller
         $bpjsEntries = Bpjs::all();
         $polies = Poly::all();
         $dokters = Dokter::all();
-
+    
         // Get the 'id' parameter from the URL
         $bpjsEntryId = $request->input('id');
-
+    
         // Fetch the corresponding Bpjs entry from the database
         $bpjsEntry = Bpjs::find($bpjsEntryId);
-
+    
         return view('select', compact('bpjsEntries', 'polies', 'dokters', 'bpjsEntry'));
     }
-
 
 
     public function handleSelection(Request $request)
     {
         // Validate the form data
         $request->validate([
-            'no_bpjs' => 'required', // Add other validation rules as needed
-            'selected_poli' => 'required',
-            'selected_dokter' => 'required',
-            'norm' => 'required', // Add validation rule for 'norm' if needed
-            // Add other validation rules as needed
+            'selected_poly_id' => 'required',
+            'selected_dokter_id' => 'required',
         ]);
-    
+
         // Retrieve data from the validated request
-        $noBpjs = $request->input('no_bpjs');
-        $selectedPoli = $request->input('selected_poli');
-        $selectedDokter = $request->input('selected_dokter');
-        $norm = $request->input('norm');
+        $selectedPoli = $request->input('selected_poly_id');
+        $selectedDokter = $request->input('selected_dokter_id');
+
+        // Assuming you have a Bpjs model instance based on the 'no_bpjs'
+        $bpjsEntry = Bpjs::where('no_bpjs', $request->input('no_bpjs'))->first();
+
+        if ($bpjsEntry) {
+            // Update the selected_poly_id and selected_dokter_id fields
+            $bpjsEntry->selected_poly_id = $selectedPoli;
+            $bpjsEntry->selected_dokter_id = $selectedDokter;
+            $bpjsEntry->save();
+        } else {
+            // Handle the case when the Bpjs entry is not found
+            // You may want to add some error handling or redirection here
+        }
+
+        // Redirect to a success page or back to the form
+        return redirect()->route('select')->with('success', 'Data saved successfully.');
+    }
+   
+
     
-        // Save data to the database
-        Bpjs::create([
-            'no_bpjs' => $noBpjs,
-            'norm' => $norm,
-            'selected_poly_id' => $selectedPoli,
-            'selected_dokter_id' => $selectedDokter,
-            // Add other fields as needed
-        ]);
-    }    
+
     
+
+
     
+    public function print($id)
+    {
+        $bpjsEntry = Bpjs::find($id);
+    
+        if (!$bpjsEntry) {
+            // Handle the case where the BPJS entry with the given $id is not found
+            abort(404);
+        }
+    
+        return view('print', compact('bpjsEntry'));
+    }
 
 }
