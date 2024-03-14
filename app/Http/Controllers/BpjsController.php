@@ -75,22 +75,20 @@ class BpjsController extends Controller
         // Save changes to the database
         $bpjsEntry->save();
 
-        return redirect()->back()->with('success', 'Selection saved successfully');
+        return redirect()->back()->with('success', 'Simpan Data Berhasil!');
     }
 
 
     public function print($id)
-{
-    // Find the BPJS entry by ID
-    $bpjsEntry = Bpjs::find($id);
+    {
+        // Find the BPJS entry by ID
+        $bpjsEntry = Bpjs::find($id);
 
-    if (!$bpjsEntry) {
-        return redirect()->back()->with('error', 'BPJS entry not found');
+        if (!$bpjsEntry) {
+            return redirect()->back()->with('error', 'BPJS entry not found');
+        }
+
+        // You can pass $bpjsEntry to the print view if needed
+        return view('print', compact('bpjsEntry'));
     }
-
-    // You can pass $bpjsEntry to the print view if needed
-    return view('print', compact('bpjsEntry'));
-}
-
-
 }

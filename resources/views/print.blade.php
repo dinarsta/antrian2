@@ -27,6 +27,8 @@
                     <p><strong>Jenis Kelamin:</strong> {{ $bpjsEntry->jenis_kelamin }}</p>
                     <p><strong>Tanggal Lahir:</strong> {{ $bpjsEntry->tgl_lahir }}</p>
                     <p><strong>Alamat:</strong> {{ $bpjsEntry->alamat }}</p>
+                    <p><strong>Dokter:</strong> {{ $bpjsEntry->selected_dokter_id }}</p>
+                    <p><strong>Poli:</strong> {{ $bpjsEntry->selected_poly_id }}</p>
 
                     <!-- Print button with "no-print" class -->
                     <button class="btn btn-primary no-print" onclick="window.print()">Print</button>
