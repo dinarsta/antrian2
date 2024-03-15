@@ -16,10 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_poli')->nullable();
             $table->string('nama_dokter');
             $table->string('jam_kerja');
+            $table->string('hari');
             $table->string('shift');
             $table->timestamps();
 
-            $table->unique('id_poli');
+
 
             $table->foreign('id_poli')->references('id')->on('polies')->onDelete('set null');
         });
