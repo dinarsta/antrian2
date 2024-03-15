@@ -27,8 +27,21 @@
                     <p><strong>Jenis Kelamin:</strong> {{ $bpjsEntry->jenis_kelamin }}</p>
                     <p><strong>Tanggal Lahir:</strong> {{ $bpjsEntry->tgl_lahir }}</p>
                     <p><strong>Alamat:</strong> {{ $bpjsEntry->alamat }}</p>
-                    <p><strong>Dokter:</strong> {{ $bpjsEntry->selected_dokter_id }}</p>
-                    <p><strong>Poli:</strong> {{ $bpjsEntry->selected_poly_id }}</p>
+                    <p><strong>Dokter:</strong>
+                        @if ($bpjsEntry->selected_dokter_id)
+                            {{ App\Models\Dokter::find($bpjsEntry->selected_dokter_id)->nama_dokter }}
+                        @else
+                            Belum dipilih
+                        @endif
+                    </p>
+                    <p><strong>Poli:</strong>
+                        @if ($bpjsEntry->selected_poli_id)
+                            {{ App\Models\Poly::find($bpjsEntry->selected_poli_id)->nama_poly }}
+                        @else
+                            Belum dipilih
+                        @endif
+                    </p>
+
 
                     <!-- Print button with "no-print" class -->
                     <button class="btn btn-primary no-print" onclick="window.print()">Print</button>

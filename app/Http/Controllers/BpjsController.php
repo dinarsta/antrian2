@@ -56,7 +56,7 @@ class BpjsController extends Controller
     {
         // Validate the form data as needed
         $request->validate([
-            'selected_poly_id' => 'required|exists:polies,id',
+            'selected_poli_id' => 'required|exists:polies,id',
             'selected_dokter_id' => 'required|exists:dokters,id',
             // Add other validation rules as needed
         ]);
@@ -69,7 +69,7 @@ class BpjsController extends Controller
         }
 
         // Update the selected poly and dokter for the BPJS entry
-        $bpjsEntry->selected_poly_id = $request->input('selected_poly_id');
+        $bpjsEntry->selected_poli_id = $request->input('selected_poli_id'); // Update this line
         $bpjsEntry->selected_dokter_id = $request->input('selected_dokter_id');
 
         // Save changes to the database

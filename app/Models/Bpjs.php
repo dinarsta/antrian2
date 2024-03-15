@@ -8,19 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Bpjs extends Model
 {
     use HasFactory;
-   
-    protected $table = 'bpjs';
-    protected $guarded = [];
 
-  // Relasi dengan Polies (Poliklinik)
-  public function poliklinik()
+    protected $table = 'bpjs';
+    protected $fillable = ['no_bpjs', 'norm', 'nik_ktp', 'nama', 'jenis_kelamin', 'tgl_lahir', 'alamat', 'selected_poly_id', 'selected_dokter_id'];
+
+  public function poli()
   {
-      return $this->belongsTo(Polies::class, 'selected_poly_id'); // Update the foreign key column name
+      return $this->belongsTo(Poly::class, 'selected_poli_id');
   }
 
-  // Relasi dengan Dokter
   public function dokter()
   {
-      return $this->belongsTo(Dokter::class, 'selected_dokter_id'); // Update the foreign key column name
+      return $this->belongsTo(Dokter::class, 'selected_dokter_id');
   }
 }

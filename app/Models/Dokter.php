@@ -10,9 +10,15 @@ class Dokter extends Model
     use HasFactory;
     protected $table = 'dokters';
     protected $guarded = [];
-    public function polies()
+
+
+    public function poli()
     {
-        return $this->belongsToMany(Polies::class, 'nama_poly_dokters', 'id_dokter', 'id_poly')
-            ->withPivot(['jam_kerja', 'shift']);
+        return $this->belongsTo(PolY::class, 'id_poli');
+    }
+
+    public function bpjs()
+    {
+        return $this->hasMany(BPJS::class, 'selected_dokter_id');
     }
 }

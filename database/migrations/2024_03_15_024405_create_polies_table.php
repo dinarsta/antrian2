@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_poly');
             $table->timestamps();
+
+            $table->unique('id_dokter');
         });
     }
 

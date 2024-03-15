@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nama_poly_dokters', function (Blueprint $table) {
+        Schema::create('dokters', function (Blueprint $table) {
             $table->id();
-            
-            $table->unsignedBigInteger('id_poly');
-            $table->unsignedBigInteger('id_dokter');
+            $table->unsignedBigInteger('id_poli')->nullable();
+            $table->string('nama_dokter');
             $table->string('jam_kerja');
             $table->string('shift');
             $table->timestamps();
 
-            // Foreign keys
-            $table->foreign('id_poly')->references('id')->on('polies')->onDelete('cascade');
-            $table->foreign('id_dokter')->references('id')->on('dokters')->onDelete('cascade');
+            $table->unique('id_poli');
+
+            $table->foreign('id_poli')->references('id')->on('polies')->onDelete('set null');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nama_poly_dokters');
+        Schema::dropIfExists('dokters');
     }
 };

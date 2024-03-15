@@ -1,4 +1,3 @@
-tabel bpjs
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -21,11 +20,12 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->date('tgl_lahir');
             $table->text('alamat');
-            $table->unsignedBigInteger('selected_poly_id')->nullable();
+            $table->unsignedBigInteger('selected_poli_id')->nullable();
             $table->unsignedBigInteger('selected_dokter_id')->nullable();
             $table->timestamps();
 
-            // Foreign keys will be added in the new migration
+            $table->foreign('selected_poli_id')->references('id')->on('polies')->onDelete('set null');
+            $table->foreign('selected_dokter_id')->references('id')->on('dokters')->onDelete('set null');
         });
     }
 

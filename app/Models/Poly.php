@@ -13,7 +13,11 @@ class Poly extends Model
 
     public function dokters()
     {
-        return $this->belongsToMany(Dokter::class, 'nama_poly_dokters', 'id_poly', 'id_dokter')
-            ->withPivot(['jam_kerja', 'shift']);
+        return $this->hasMany(Dokter::class);
+    }
+
+    public function bpjs()
+    {
+        return $this->hasMany(BPJS::class, 'selected_poli_id');
     }
 }
